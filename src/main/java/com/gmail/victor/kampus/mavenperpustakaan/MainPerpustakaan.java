@@ -15,6 +15,8 @@ public class MainPerpustakaan {
         boolean isTambah = true;
         Scanner input = new Scanner(System.in);
         Perpustakaan perpus = new Perpustakaan();
+        String isbn ;
+        char keyakinan;
         Map<String, Book> daftarBuku = new LinkedHashMap<String, Book>();
         while (isTambah) {
             System.out.println(" ***********************************************************");
@@ -25,7 +27,16 @@ public class MainPerpustakaan {
             System.out.print(" Pengarang : ");
             book.setAuthor(input.next());
             System.out.print(" No ISBN : ");
-            daftarBuku.put(input.next(), book);
+            isbn =  input.next();
+            System.out.println("Yakin menambahkan data berikut ? "+ book.getAuthor() +" / "+ book.getTitle()+ " Y/F");
+            keyakinan = input.next().charAt(0);
+            if (keyakinan == 'Y') {
+                daftarBuku.put(isbn, book);
+            }
+            else if(keyakinan == 'F'){
+                System.out.println(book.getAuthor() +" / "+ book.getTitle()+ " tidak jadi ditambahkan ");
+            }
+            
             System.out.print(" Tambah data baru kembali ?(jawab dengan true/false : ");
             isTambah = input.nextBoolean();
 
