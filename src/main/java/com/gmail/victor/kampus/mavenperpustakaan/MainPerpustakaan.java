@@ -28,9 +28,44 @@ public class MainPerpustakaan {
 //        update(input, daftarBuku);
 //        delete(input, daftarBuku);
         addPeminjam(input, isTambah, daftarManusia);
-        
-        meminjam(daftarBuku, daftarManusia, input, isTambah);
 
+        meminjam(daftarBuku, daftarManusia, input, isTambah);
+        deletePeminjam(input, daftarManusia);
+
+    }
+
+    private static void deletePeminjam(Scanner input, Map<String, Peminjam> daftarManusia) {
+
+        String isbn;
+        String keyakinan;
+        System.out.println("____________________________________________________________________ ");
+        System.out.println(" ***********************************************************");
+        System.out.println(" Hapus data peminjam dengan ID  :  ");
+        isbn = input.next();
+        System.out.println("Yakin menghapus data peminjam dengan ID? " + isbn + " Y/F");
+
+        keyakinan = input.next();
+
+        if (keyakinan.equals("Y")) {
+            if (daftarManusia.get(isbn).getBuku() == null) {
+                daftarManusia.remove(isbn);
+                System.out.println("data telah dihapus");
+            } else {
+                System.out.println("Peminjam dengan ID " + isbn + "Masih meminjam buku");
+            }
+        } else if (keyakinan.equals("F")) {
+            System.out.println("peminjam dengan ID " + isbn + " tidak jadi dihapus ");
+
+            System.out.println("____________________________________________________________________ ");
+
+        }
+        for (Map.Entry<String, Peminjam> entry : daftarManusia.entrySet()) {
+            System.out.println(" ***********************************************************");
+            System.out.println(entry.getKey());
+            Peminjam manusia = entry.getValue();
+            System.out.println(" Nama : " + manusia.getNama() + "  Alamat " + manusia.getAlamat());
+        }
+        System.out.println("____________________________________________________________________ ");
     }
 
     private static void meminjam(Map<String, Book> daftarBuku, Map<String, Peminjam> daftarManusia, Scanner input, Boolean isTambah) {
@@ -38,21 +73,21 @@ public class MainPerpustakaan {
         String keyakinan;
         System.out.println("ID Peminjam");
         String idPeminjam = input.next();
-        System.out.println("Nama : "+daftarManusia.get(idPeminjam).getNama()+ " Alamat : "+ daftarManusia.get(idPeminjam).getAlamat() );
+        System.out.println("Nama : " + daftarManusia.get(idPeminjam).getNama() + " Alamat : " + daftarManusia.get(idPeminjam).getAlamat());
         Map<String, Book> mBuku = new LinkedHashMap<String, Book>();
         while (isTambah) {
             System.out.println(" ***********************************************************");
             System.out.println("Pinjam Buku");
             System.out.print(" ISBN : ");
             isbn = input.next();
-            System.out.println("judul "+daftarBuku.get(isbn).getTitle()+" pengaran"+ daftarBuku.get(isbn).getAuthor() + "yakin menambahkan buku berikut? Y/F");
+            System.out.println("judul " + daftarBuku.get(isbn).getTitle() + " pengaran" + daftarBuku.get(isbn).getAuthor() + "yakin menambahkan buku berikut? Y/F");
             keyakinan = input.next();
 
             if (keyakinan.equals("Y")) {
                 Book buku = new Book();
                 buku.setTitle(daftarBuku.get(isbn).getTitle());
                 buku.setAuthor(daftarBuku.get(isbn).getAuthor());
-                
+
                 mBuku.put(isbn, buku);
                 daftarManusia.get(idPeminjam).setBuku(mBuku);
             } else if (keyakinan.equals("F")) {
@@ -63,7 +98,7 @@ public class MainPerpustakaan {
             isTambah = input.nextBoolean();
 
         }
-        System.out.println("Judul buku yang "+daftarManusia.get(idPeminjam).getNama()+" adalah" );
+        System.out.println("Judul buku yang " + daftarManusia.get(idPeminjam).getNama() + " adalah");
         for (Map.Entry<String, Book> entry : daftarManusia.get(idPeminjam).getBuku().entrySet()) {
             System.out.println(entry.getKey());
             Book buku = entry.getValue();
