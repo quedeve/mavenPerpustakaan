@@ -16,7 +16,7 @@ public class MainPerpustakaan {
         Scanner input = new Scanner(System.in);
         Perpustakaan perpus = new Perpustakaan();
         String isbn;
-        char keyakinan;
+        String keyakinan;
         Map<String, Book> daftarBuku = new LinkedHashMap<String, Book>();
         while (isTambah) {
             System.out.println(" ***********************************************************");
@@ -29,10 +29,11 @@ public class MainPerpustakaan {
             System.out.print(" No ISBN : ");
             isbn = input.next();
             System.out.println("Yakin menambahkan data berikut ? " + book.getAuthor() + " / " + book.getTitle() + " Y/F");
-            keyakinan = input.next().charAt(0);
-            if (keyakinan == 'Y') {
+            keyakinan = input.next();
+
+            if (keyakinan.equals("Y")) {
                 daftarBuku.put(isbn, book);
-            } else if (keyakinan == 'F') {
+            } else if (keyakinan.equals("F")) {
                 System.out.println(book.getAuthor() + " / " + book.getTitle() + " tidak jadi ditambahkan ");
             }
 
@@ -49,12 +50,18 @@ public class MainPerpustakaan {
         System.out.println(" ***********************************************************");
         System.out.println(" Hapus buku dengan No ISBN :  ");
         isbn = input.next();
-        System.out.println("Yakin menghapus buku dengan No ISBN ? " + isbn +  " Y/F");
-        keyakinan = input.next().charAt(0);
-        if (keyakinan == 'Y') {
-            daftarBuku.remove(input.next());
-        } else if (keyakinan == 'F') {
-            System.out.println( "Buku dengan No "+ isbn + " tidak jadi dihapus ");
+        System.out.println("Yakin menghapus buku dengan No ISBN ? " + isbn + " Y/F");
+
+        keyakinan = input.next();
+
+        if (keyakinan.equals("Y")) {
+            daftarBuku.remove(isbn);
+            System.out.println("data telah dihapus");
+        } else if (keyakinan.equals("F")) {
+            System.out.println("Buku dengan No " + isbn + " tidak jadi dihapus ");
+        } else {
+            System.out.println(keyakinan);
+            System.out.println("error");
         }
 
         System.out.println("____________________________________________________________________ ");
@@ -65,6 +72,35 @@ public class MainPerpustakaan {
             System.out.println(" Judul  Buku : " + buku.getTitle() + "  penarang " + buku.getAuthor());
         }
         System.out.println("____________________________________________________________________ ");
+
+        //Upadate
+        System.out.println("____________________________________________________________________ ");
+        System.out.println(" ***********************************************************");
+        System.out.println(" update buku dengan No ISBN :  ");
+        isbn = input.next();
+        System.out.print(" Judul Buku : ");
+        Book book = new Book();
+        book.setTitle(input.next());
+        System.out.print(" Pengarang : ");
+        book.setAuthor(input.next());
+
+        System.out.println("Yakin memperbaharui buku dengan No ISBN ? " + isbn + " Pengarang menjadi : " + book.getAuthor() + " dan Judul Buku menjadi :" + book.getTitle() + " Y/F");
+        keyakinan = input.next();
+        if (keyakinan.equals("Y")) {
+            daftarBuku.put(isbn, book);
+        } else if (keyakinan.equals("F")) {
+            System.out.println("Buku dengan No " + isbn + " tidak jadi diperbaharui ");
+        }
+
+        System.out.println("____________________________________________________________________ ");
+        for (Map.Entry<String, Book> entry : daftarBuku.entrySet()) {
+            System.out.println(" ***********************************************************");
+            System.out.println(entry.getKey());
+            Book buku = entry.getValue();
+            System.out.println(" Judul  Buku : " + buku.getTitle() + "  pegnarang " + buku.getAuthor());
+        }
+        System.out.println("____________________________________________________________________ ");
+
     }
 
 }
