@@ -30,7 +30,7 @@ public class MainPerpustakaan {
         addPeminjam(input, isTambah, daftarManusia);
 
         meminjam(daftarBuku, daftarManusia, input, isTambah);
-        deletePeminjam(input, daftarManusia);
+//        deletePeminjam(input, daftarManusia);
 
     }
 
@@ -71,38 +71,52 @@ public class MainPerpustakaan {
     private static void meminjam(Map<String, Book> daftarBuku, Map<String, Peminjam> daftarManusia, Scanner input, Boolean isTambah) {
         String isbn;
         String keyakinan;
-        System.out.println("ID Peminjam");
-        String idPeminjam = input.next();
-        System.out.println("Nama : " + daftarManusia.get(idPeminjam).getNama() + " Alamat : " + daftarManusia.get(idPeminjam).getAlamat());
-        Map<String, Book> mBuku = new LinkedHashMap<String, Book>();
-        while (isTambah) {
-            System.out.println(" ***********************************************************");
-            System.out.println("Pinjam Buku");
-            System.out.print(" ISBN : ");
-            isbn = input.next();
-            System.out.println("judul " + daftarBuku.get(isbn).getTitle() + " pengaran" + daftarBuku.get(isbn).getAuthor() + "yakin menambahkan buku berikut? Y/F");
-            keyakinan = input.next();
+        Boolean tambahDataPinjaman = true;
+        while (tambahDataPinjaman) {
+            System.out.println("ID Peminjam");
+            String idPeminjam = input.next();
+            System.out.println("Nama : " + daftarManusia.get(idPeminjam).getNama() + " Alamat : " + daftarManusia.get(idPeminjam).getAlamat());
+            Map<String, Book> mBuku = new LinkedHashMap<String, Book>();
+            while (isTambah) {
+                System.out.println(" ***********************************************************");
+                System.out.println("Pinjam Buku");
+                System.out.print(" ISBN : ");
+                isbn = input.next();
+                System.out.println("judul " + daftarBuku.get(isbn).getTitle() + " pengaran" + daftarBuku.get(isbn).getAuthor() + "yakin menambahkan buku berikut? Y/F");
+                keyakinan = input.next();
 
-            if (keyakinan.equals("Y")) {
-                Book buku = new Book();
-                buku.setTitle(daftarBuku.get(isbn).getTitle());
-                buku.setAuthor(daftarBuku.get(isbn).getAuthor());
+                if (keyakinan.equals("Y")) {
+                    if (daftarBuku.get(isbn).isPinjam() == false) {
+                        Book buku = new Book();
+                        buku.setTitle(daftarBuku.get(isbn).getTitle());
+                        buku.setAuthor(daftarBuku.get(isbn).getAuthor());
+                        daftarBuku.get(isbn).setPinjam(true);
+                        mBuku.put(isbn, buku);
+                        daftarManusia.get(idPeminjam).setBuku(mBuku);
+                    }
+                    else{
+                        System.out.println("Buku tersebut lagi dipinjam");
+                    }
+                } else if (keyakinan.equals("F")) {
+                    System.out.println("Tidak Jadi Meminjam");
+                }
 
-                mBuku.put(isbn, buku);
-                daftarManusia.get(idPeminjam).setBuku(mBuku);
-            } else if (keyakinan.equals("F")) {
-                System.out.println("Tidak Jadi Meminjam");
+                System.out.print(" Tambah data Pinjaman Kembali ?(jawab dengan true/false : ");
+                isTambah = input.nextBoolean();
+
             }
-
-            System.out.print(" Tambah data Pinjaman Kembali ?(jawab dengan true/false : ");
-            isTambah = input.nextBoolean();
-
-        }
-        System.out.println("Judul buku yang " + daftarManusia.get(idPeminjam).getNama() + " adalah");
-        for (Map.Entry<String, Book> entry : daftarManusia.get(idPeminjam).getBuku().entrySet()) {
-            System.out.println(entry.getKey());
-            Book buku = entry.getValue();
-            System.out.println(" Judul  : " + buku.getTitle() + "  Pengaran " + buku.getAuthor());
+            System.out.println("Judul buku yang " + daftarManusia.get(idPeminjam).getNama() + " adalah");
+            Map<String, Book> listBook = daftarManusia.get(idPeminjam).getBuku();
+            if (listBook != null) {
+                for (Map.Entry<String, Book> entry : daftarManusia.get(idPeminjam).getBuku().entrySet()) {
+                    System.out.println(entry.getKey());
+                    Book buku = entry.getValue();
+                    System.out.println(" Judul  : " + buku.getTitle() + "  Pengaran " + buku.getAuthor());
+                }
+            }
+            isTambah = true;
+            System.out.print(" Tambah data orang Meminjam ?(jawab dengan true/false : ");
+            tambahDataPinjaman = input.nextBoolean();
         }
     }
 

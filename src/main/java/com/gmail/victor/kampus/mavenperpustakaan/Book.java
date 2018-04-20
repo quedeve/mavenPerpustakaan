@@ -11,6 +11,10 @@ public class Book {
     private String author;
     private boolean isPinjam;
 
+    public Book() {
+        this.isPinjam = false;
+    }
+
     public String getTitle() {
         return title;
     }

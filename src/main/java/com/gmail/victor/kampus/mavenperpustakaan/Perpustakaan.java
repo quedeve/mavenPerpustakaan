@@ -12,6 +12,7 @@ public class Perpustakaan {
     private Map<String, Book> daftarBuku;
     private String namaPerpustakaan;
 
+    
     public Map<String, Book> getDaftarBuku() {
         return daftarBuku;
     }
