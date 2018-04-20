@@ -9,11 +9,9 @@ public class Book {
 
     private String title;
     private String author;
-    private boolean isPinjam;
+    private String isPinjam;
 
-    public Book() {
-        this.isPinjam = false;
-    }
+
 
     public String getTitle() {
         return title;
@@ -31,12 +29,14 @@ public class Book {
         this.author = author;
     }
 
-    public boolean isPinjam() {
+    public String getIsPinjam() {
         return isPinjam;
     }
 
-    public void setPinjam(boolean isPinjam) {
+    public void setIsPinjam(String isPinjam) {
         this.isPinjam = isPinjam;
     }
+
+
 
 }

@@ -31,7 +31,26 @@ public class MainPerpustakaan {
 
         meminjam(daftarBuku, daftarManusia, input, isTambah);
 //        deletePeminjam(input, daftarManusia);
+        tampilkanSemuaBukuDanPeminjam(daftarBuku, daftarManusia);
 
+    }
+
+    private static void tampilkanSemuaBukuDanPeminjam(Map<String, Book> daftarBuku, Map<String, Peminjam> daftarManusia) {
+        System.out.println(" ***********************************************************");
+        System.out.println(" ***********************************************************");
+        System.out.println(" ***********************************************************");
+        System.out.println("Daftar Buku");
+        for (Map.Entry<String, Book> entry : daftarBuku.entrySet()) {
+            System.out.println(entry.getKey());
+            Book book = entry.getValue();
+            if (book.getIsPinjam() == null) {
+                System.out.println(" Judul Buku : " + book.getTitle() + "  pengarang " + book.getAuthor());
+            }
+            else{
+                 System.out.println(" Judul Buku : " + book.getTitle() + "  pengarang " + book.getAuthor() + " dipinjam : " + daftarManusia.get(book.getIsPinjam()).getNama());
+            }
+           
+        }
     }
 
     private static void deletePeminjam(Scanner input, Map<String, Peminjam> daftarManusia) {
@@ -86,15 +105,14 @@ public class MainPerpustakaan {
                 keyakinan = input.next();
 
                 if (keyakinan.equals("Y")) {
-                    if (daftarBuku.get(isbn).isPinjam() == false) {
+                    if (daftarBuku.get(isbn).getIsPinjam() == null) {
                         Book buku = new Book();
                         buku.setTitle(daftarBuku.get(isbn).getTitle());
                         buku.setAuthor(daftarBuku.get(isbn).getAuthor());
-                        daftarBuku.get(isbn).setPinjam(true);
+                        daftarBuku.get(isbn).setIsPinjam(idPeminjam);
                         mBuku.put(isbn, buku);
                         daftarManusia.get(idPeminjam).setBuku(mBuku);
-                    }
-                    else{
+                    } else {
                         System.out.println("Buku tersebut lagi dipinjam");
                     }
                 } else if (keyakinan.equals("F")) {
